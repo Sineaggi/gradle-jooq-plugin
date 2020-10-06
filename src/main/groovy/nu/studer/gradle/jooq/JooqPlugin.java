@@ -84,7 +84,8 @@ public class JooqPlugin implements Plugin<Project> {
         project.getConfigurations().configureEach(configuration ->
             configuration.getResolutionStrategy().eachDependency(details -> {
                 ModuleVersionSelector requested = details.getRequested();
-                if (jooqGroupIds.contains(requested.getGroup()) && requested.getName().startsWith("jooq")) {
+                if (jooqGroupIds.contains(requested.getGroup()) && requested.getName().startsWith("jooq")
+                        && !jooqExtension.getVersionIsProvidedByPlatform().get()) {
                     String group = jooqExtension.getEdition().get().getGroupId();
                     String version = jooqExtension.getVersion().get();
                     details.useTarget(group + ":" + requested.getName() + ":" + version);
